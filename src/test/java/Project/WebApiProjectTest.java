@@ -1,0 +1,13 @@
+package Project;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+public class WebApiProjectTest {
+	
+	@Test
+	void contextLoads() {
+	}
+
+}

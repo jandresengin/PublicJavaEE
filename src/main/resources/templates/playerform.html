@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Players | Project</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://storage.googleapis.com/javaee/imag/style.css">
+</head>
+<body>
+  <!-- nav -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top custom_nav">
+    <div class="container">
+      <a class="navbar-brand" href="/create">Create Player</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/create">Create Player</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/allplayers">All Players</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/findbyname">Find Player by name</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/numberOfPlayers">Number of Players</a>
+          </li>
+          
+          
+        </ul>
+        
+      </div>
+    </div>
+</nav>
+ <!-- nav -->
+ <header class="main-banner">
+      <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-md-8 ">
+              <div class="main-banner-content">
+                <h1>Create your new Player</h1>
+                <form action="#" th:action="@{/create}" th:object="${player}" method="post">
+                      <table class="table table-bordered text-light table-hover table-dark">
+                          <thead class="thead-light w-100 font-weight-bold">
+                              <tr>
+                                  <td>Name</td>
+                                  <td>Player age</td>
+                                  <td>Avatar name</td>
+                                  <td>Email</td>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                <td>
+                                  <input type="text" th:field="*{name}"/><p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                                </td>
+                                <td>
+                                  <input type="number" th:field="*{agePlayer}"/><p th:if="${#fields.hasErrors('agePlayer')}" th:errors="*{agePlayer}"></p>
+                                </td>
+                                <td>
+                                  <input type="text" th:field="*{avatarName}"/><p th:if="${#fields.hasErrors('avatarName')}" th:errors="*{avatarName}"></p>
+                                </td>
+                                <td>
+                                  <input type="text" th:field="*{email}"/><p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                                </td>
+                              </tr>
+                              
+ 
+                            </tbody>
+                      </table>
+                  <input type="submit" value="submit"/>
+                </form>
+            <br><br><br>
+            <h4>Total number of active players in the DB: <span id="numberPlayers"></span></h4>
+            <br>
+            <h4>Total number of queries on the server since the last restart: <span id="numberHits"></span></h4>
+          </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+  <script>
+    window.setInterval(refreshUser, 10000)
+  
+    function refreshUser() {
+       $.get("/numberOfPlayers", function(results) { 
+         $("#numberPlayers").html(results)
+       })
+       
+    }
+    function refreshHits() {
+		$.get("/currentcount", function(results) { 
+			$("#numberHits").html(results)
+		})
+		
+		}
+  </script>
+  
+   <script>
+    window.setInterval(refreshHits, 3000)
+  
+  
+    function refreshHits() {
+		$.get("/currentcount", function(results) { 
+			$("#numberHits").html(results)
+		})
+		
+		}
+  </script>
+  <!-- Footer -->
+  <footer class="main-footer">
+        
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <aside class="footer-widget">
+                    <h5>Java EE, BD from AWS.</h5>
+                    <ul>
+                        <li><a href="/create">Create Player</a></li>
+                        <li><a href="/allplayers">All Players</a></li>
+                        <li><a href="/findbyname">Find Player by name</a></li>
+                        <li><a href="/numberOfPlayers">Number of Players</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <aside class="footer-widget">
+                    <h5>lombok. POO, MVC</h5>
+                    <ul>
+                        <li><a href="/create">Create Player</a></li>
+                        <li><a href="/allplayers">All Players</a></li>
+                        <li><a href="/findbyname">Find Player by name</a></li>
+                        <li><a href="/numberOfPlayers">Number of Players</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <aside class="footer-widget">
+                    <h5>Spring Boot, WEBAPI</h5>
+                    <ul>
+                        <li><a href="/create">Create Player</a></li>
+                        <li><a href="/allplayers">All Players</a></li>
+                        <li><a href="/findbyname">Find Player by name</a></li>
+                        <li><a href="/numberOfPlayers">Number of Players</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <aside class="footer-widget">
+                    <h5>https://github.com/jandresengin/JavaEEPublic</h5>
+                    <h5>Boostrap, HTML5, RESTAPI, GET, POST</h5>
+                    <address>
+                        <p>Jairo Andres Supelano Rativa</p>
+                        <p><strong>Email: </strong> <a href="mailto:jandres084@gmail.com">jandres084@gmail.com</a></p>
+                    </address>
+                </aside>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer -->
+</body>
+</html>
